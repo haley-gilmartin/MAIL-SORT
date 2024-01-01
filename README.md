@@ -48,6 +48,7 @@ we need to use vectors and/or langchain to cut costs and code for efficiency of 
 # SET UP
 1. Add kumar to auth google cloud + git
 2. Environment variables + API key
-3. Run + troubleshoot 
+3. Run quickstart.py + troubleshoot 
 4. Installs (dotenv, gmail api, etc.)
-5. Walk through + Assignment overview
+5. Walk through + token.json
+6. Assignment overview
