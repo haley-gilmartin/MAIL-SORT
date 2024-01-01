@@ -21,7 +21,7 @@ user_name = "Haley"
 # Load environment variables from .env file
 load_dotenv()
 
-openai.api_key = os.environ.get("HALEYS_KEY")
+openai.api_key = os.environ.get("MAIL-SORT-KEY")
 SCOPES = ["https://mail.google.com/"]
 
 
