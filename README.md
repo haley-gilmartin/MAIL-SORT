@@ -16,11 +16,18 @@ we need to use vectors and/or langchain to cut costs and code for efficiency of 
 
 
 1.  Framework
+
 Sending, drafting, creating labels, searching, adding labels, (threads if necessary), deleting emails
-2. Data Storage
+
+3. Data Storage
+
 Look into Redis software and vector storage. reference DCUBE for pipelining
-3. AI application
+
+4. AI application
+
 This is the fun and easy part
-4. AI UI application
+
+5. AI UI application
+
 I'm thinking of making it into a downloadable google playstore extension. that would be sick.
 
