@@ -25,6 +25,7 @@ user_name = "Haley"
 
 
 openai.api_key = "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"
+SCOPES = ["https://www.googleapis.com/auth/gmail.readonly", "https://www.googleapis.com/auth/gmail.compose"]
 
 
 def get_completion(prompt, model="gpt-3.5-turbo"):
@@ -78,10 +79,22 @@ def gmail_create_draft():
     print(f"An error occurred: {error}")
     draft = None
 
+  sendyn = (input("Here's your draft. Send? (Y/N) /n" + message.get_content()) == "y")
+  if sendyn:
+    send_draft(service, "me", draft["id"])
   return draft
 
 # If modifying these scopes, delete the file token.json.
-SCOPES = ["https://www.googleapis.com/auth/gmail.readonly", "https://www.googleapis.com/auth/gmail.compose"]
+def send_draft(service, user_id, draft_id):
+    """Send an email draft."""
+    try:
+        # pylint: disable=E1101
+        service.users().drafts().send(userId=user_id, body={"id": draft_id}).execute()
+
+        print(f"Draft sent! Draft Id: {draft_id}")
+    except HttpError as error:
+        print(f"An error occurred while sending the draft: {error}")
+
 
 
 def main():
