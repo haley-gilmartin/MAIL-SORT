@@ -8,6 +8,7 @@ Sorts, recalls, deletes, and manages email on command using OpenAI.
 3. AI command line application
 4. AI UI application
 
+Huge mess rn. huge mess.
 Not that that easy of a project like I had anticipated. 
 i forgot about the sheer magnitude of data we'll be working with because most people are email pigs
 please please please don't make it so i have a $500 OpenAI bill. 
