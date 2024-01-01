@@ -44,3 +44,10 @@ we need to use vectors and/or langchain to cut costs and code for efficiency of 
 7. Reevaluate intentions for project (are we actually doing something with it or is it just a personal assistant just for us)
 
 
+
+# SET UP
+1. Add kumar to auth google cloud + git
+2. Environment variables + API key
+3. Run + troubleshoot 
+4. Installs (dotenv, gmail api, etc.)
+5. Walk through + Assignment overview
