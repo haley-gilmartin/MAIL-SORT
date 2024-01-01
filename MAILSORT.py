@@ -200,10 +200,12 @@ def main():
 
 
 if __name__ == "__main__":
-  #gmail_create_draft()
+  gmail_create_draft()
+  """
   search_query = "automated draft"  # Replace with the keyword you want to search for
   label_name = "Automated"
   add_label_to_message("18cc26ef19c6601f", label_name)
+  """
 
 
  
