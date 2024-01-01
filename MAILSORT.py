@@ -20,7 +20,7 @@ import json
 user_name = "Haley"
 
 
-openai.api_key = "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"
+openai.api_key = "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" #KUMAR USE YOUR OWN API KEY
 SCOPES = ["https://mail.google.com/"]
 
 
