@@ -1,11 +1,11 @@
 ## MAIL-SORT
 Sorts, recalls, deletes, and manages email on command using OpenAI.
 
-### Kumar's Assignments
+### Assignments
 
 [ DUE ] Jan 3, 2024
 See task 1 below
-I need you to make the code more efficient and to finish the features listed. I will aid in this and answer questions as needed. Feel free to schedule face time meetings ;)
+I need you to make the code more efficient and to finish the features listed. I will aid in this and answer questions as needed. Feel free to schedule face time meetings
 
 ### Project Overview, Tasks, and Notes
 
