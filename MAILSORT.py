@@ -18,9 +18,10 @@ _ = load_dotenv(find_dotenv())
 import json
 
 user_name = "Haley"
+# Load environment variables from .env file
+load_dotenv()
 
-
-openai.api_key = "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" #KUMAR USE YOUR OWN API KEY
+openai.api_key = os.environ.get("HALEYS_KEY")
 SCOPES = ["https://mail.google.com/"]
 
 
