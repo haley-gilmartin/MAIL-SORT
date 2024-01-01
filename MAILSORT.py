@@ -17,14 +17,11 @@ from dotenv import load_dotenv, find_dotenv
 _ = load_dotenv(find_dotenv())
 import json
 
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
 user_name = "Haley"
 
 
 openai.api_key = "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"
-SCOPES = ["https://www.googleapis.com/auth/gmail.readonly", "https://www.googleapis.com/auth/gmail.compose"]
+SCOPES = ["https://mail.google.com/"]
 
 
 def get_completion(prompt, model="gpt-3.5-turbo"):
@@ -94,7 +91,68 @@ def send_draft(service, user_id, draft_id):
     except HttpError as error:
         print(f"An error occurred while sending the draft: {error}")
 
+def search_messages(query):
+    creds = main()
 
+    try:
+        service = build("gmail", "v1", credentials=creds)
+        # Use the users().messages().list method with the 'q' parameter for searching
+        response = service.users().messages().list(userId="me", q=query).execute()
+        messages = response.get('messages', [])
+
+        if not messages:
+            print(f"No messages found for the query: {query}")
+            return []
+
+        print(f"Messages found for the query '{query}':")
+        for message in messages:
+            message_id = message['id']
+            message_details = service.users().messages().get(userId="me", id=message_id).execute()
+            subject = next((header['value'] for header in message_details['payload']['headers'] if header['name'] == 'Subject'), 'N/A')
+            print(f"Message ID: {message_id}, Subject: {subject}")
+
+        return messages
+
+    except Exception as error:
+        print(f"An error occurred while searching messages: {error}")
+        return []
+
+def add_label_to_message(message_id, label_name):
+    creds = main()
+
+    try:
+        service = build("gmail", "v1", credentials=creds)
+        # Use the users().messages().modify method to add labels to the message
+        #create_label(service, label_name)
+        label_id = ""
+        labels = service.users().labels().list(userId="me").execute().get("labels", [])
+        for label in labels:
+            if label["name"] == label_name:
+                 label_id = label["id"]
+
+        service.users().messages().modify(
+            userId="me",
+            id=message_id,
+            body={"addLabelIds": [label_id], "removeLabelIds": []},
+        ).execute()
+
+        print(f"Label '{label_name}' added to message ID: {message_id}")
+    except HttpError as error:
+        print(f"An error occurred while adding label to the message: {error}")
+
+def create_label(service, label_name):
+    try:
+        # Use the users().labels().create method to create a new label
+        label = service.users().labels().create(
+            userId="me",
+            body={"name": label_name, "labelListVisibility": "labelShow", "messageListVisibility": "show"},
+        ).execute()
+
+        print(f"Label '{label_name}' created with ID: {label['id']}")
+        return label['id']
+    except HttpError as error:
+        print(f"An error occurred while creating the label: {error}")
+        return None
 
 def main():
   """Shows basic usage of the Gmail API.
@@ -125,13 +183,14 @@ def main():
     results = service.users().labels().list(userId="me").execute()
     labels = results.get("labels", [])
 
-    if not labels:
+    """
+    if not labels: 
       print("No labels found.")
       return
     print("Labels:")
     for label in labels:
       print(label["name"])
-
+    """
   except HttpError as error:
     # TODO(developer) - Handle errors from gmail API.
     print(f"An error occurred: {error}")
@@ -140,4 +199,10 @@ def main():
 
 
 if __name__ == "__main__":
-  gmail_create_draft()
+  #gmail_create_draft()
+  search_query = "automated draft"  # Replace with the keyword you want to search for
+  label_name = "Automated"
+  add_label_to_message("18cc26ef19c6601f", label_name)
+
+
+ 
