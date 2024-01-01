@@ -4,7 +4,6 @@ import google.auth
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-
 import os.path
 
 from google.auth.transport.requests import Request
