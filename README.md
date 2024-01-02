@@ -36,6 +36,7 @@ we need to use vectors and/or langchain to cut costs and code for efficiency of 
 
 On the topic of vector processing:
 
+https://platform.openai.com/docs/guides/embeddings/what-are-embeddings
 
 Read emails as they come in : AI Feed (Topic, intentions, type, people) > Vector storage. <--- that query list needs some futher consideration
 
