@@ -45,7 +45,7 @@ Recall:
 2. Vector matching by date (whole database) and other metadata
 3. (generate better ideas because those aren't great ngl)
 
-
+Need a good vector comparison algorithm (see cse 20 notes) or possibly provided by openai or another source?
 
 
 #### Tasks
