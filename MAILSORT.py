@@ -5,6 +5,7 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 import os.path
+import time
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -13,9 +14,20 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 import openai
+from openai import OpenAI
+client = OpenAI(
+    api_key=os.environ.get("MAIL-SORT-KEY"),
+)
 from dotenv import load_dotenv, find_dotenv
 _ = load_dotenv(find_dotenv())
 import json
+
+import pandas as pd
+import numpy as np
+from ast import literal_eval
+from openai import cosine_similarity
+
+
 
 user_name = "Haley"
 # Load environment variables from .env file
@@ -25,6 +37,7 @@ openai.api_key = os.environ.get("MAIL-SORT-KEY")
 SCOPES = ["https://mail.google.com/"]
 
 
+## there are several ways to do this for some reason. see other doc
 def get_completion(prompt, model="gpt-3.5-turbo"):
     messages = [{"role": "user", "content": prompt}]
     response = openai.ChatCompletion.create(
@@ -34,6 +47,64 @@ def get_completion(prompt, model="gpt-3.5-turbo"):
     )
     return response.choices[0].message["content"]
 
+## Pandas feed
+
+try: 
+  df = pd.read_csv('user_message_vector_data.csv')
+
+  """ found this online. not terribly sure what it does
+  try: 
+     df["embedding"] = df.embedding.apply(literal_eval).apply(np.array)
+  except Exception as error:
+     embed_user_data()
+  """
+except Exception as error:
+  df = pd.DataFrame(columns=['content', 'embedding'])
+
+def get_embedding(text, model="text-embedding-ada-002"):
+   text = text.replace("\n", " ")
+   return client.embeddings.create(input = [text], model=model).data[0].embedding
+
+
+
+
+# search function using vector embeddings
+# this takes way too long. It makes a call for each message. we need to make it so we store the vectors first,
+# then apply similarity scoring.
+# thinking cosine similarity algorithm?
+##### REPLACE
+def vector_search(query, data_frame):
+    # calculate similarity score
+    similarity_scores = data_frame['content'].apply(lambda msg: get_completion(query + " " + msg))
+
+    # Get the index of the message with the highest similarity score
+    max_similarity_index = similarity_scores.idxmax()
+
+    # Return the message content
+    return data_frame.loc[max_similarity_index, 'content']
+
+
+# Writes user data to a .csv file
+# needs further specificity and illustration <--- WHEN YOU UPDATE THIS, UPDATE THE INITIALIZATION OF DF
+def add_message_to_user_data(message, csv_file='user_message_vector_data.csv'):
+    # Check if the CSV file exists
+    if os.path.exists(csv_file):
+        # If it exists, load the existing DataFrame
+        df = pd.read_csv(csv_file)
+    else:
+        # If it doesn't exist, create a new DataFrame
+        df = pd.DataFrame(columns=['content', 'embedding'])
+
+    # Append the new message to the DataFrame
+    df.loc[len(df.index)] = [message, get_embedding(message, model='text-embedding-ada-002')] 
+
+    # Write the DataFrame back to the CSV file
+    df.to_csv(csv_file, index=False)
+
+def embed_user_data():
+   #format existing emails into a .csv file and add an "embedding" column
+   # https://cookbook.openai.com/examples/semantic_text_search_using_embeddings
+   return ""
 
 def gmail_create_draft():
   """Create and insert a draft email.
@@ -55,7 +126,7 @@ def gmail_create_draft():
     message.set_content("This is automated draft mail")
 
     message["To"] = "2022hachen@gmail.com"
-    message["From"] = "2022hachen@gmail.com"
+    message["From"] = "2022hachen@gmail.com"  # <--- somehow, this is overwritten in  OAuth
     message["Subject"] = "Automated draft"
 
     # encoded message
@@ -200,12 +271,8 @@ def main():
 
 
 if __name__ == "__main__":
-  gmail_create_draft()
-  """
-  search_query = "automated draft"  # Replace with the keyword you want to search for
-  label_name = "Automated"
-  add_label_to_message("18cc26ef19c6601f", label_name)
-  """
+  print(get_embedding("hello my name is haley"))
+
 
 
  
