@@ -33,6 +33,21 @@ please please please don't make it so i have a $500 OpenAI bill.
 we need to use vectors and/or langchain to cut costs and code for efficiency of data recall
 (do we actually though? I need to create a detailed outline to really breakdown how this is going to work)
 
+
+On the topic of vector processing:
+
+https://platform.openai.com/docs/guides/embeddings/what-are-embeddings
+
+Read emails as they come in : AI Feed (Topic, intentions, type, people) > Vector storage. <--- that query list needs some futher consideration
+
+Recall: 
+1. Keyword extraction > GMail API search function > vector matching
+2. Vector matching by date (whole database) and other metadata
+3. (generate better ideas because those aren't great ngl)
+
+Need a good vector comparison algorithm (see cse 20 notes) or possibly provided by openai or another source?
+
+
 #### Tasks
 
 1. clean up code + finish framework
