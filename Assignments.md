@@ -11,7 +11,7 @@ The database file type can be of personal preference (e.g. .csv, .json, etc.). Y
 of efficacy of time complexity and data usage.
 
 
-[ DUE ] Jan 3, 2024 
+[ Complete ] Jan 3, 2024 
 See task 1  
 I need you to make the code more efficient and to finish the features listed. 
 I will aid in this and answer questions as needed. Feel free to schedule face time meetings
