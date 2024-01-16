@@ -24,8 +24,8 @@ import json
 
 import pandas as pd
 import numpy as np
-from ast import literal_eval
-from openai import cosine_similarity
+#from ast import literal_eval
+#from openai import cosine_similarity
 
 
 
@@ -48,7 +48,6 @@ def get_completion(prompt, model="gpt-3.5-turbo"):
     return response.choices[0].message["content"]
 
 ## Pandas feed
-
 try: 
   df = pd.read_csv('user_message_vector_data.csv')
 
