@@ -3,7 +3,7 @@ Sorts, recalls, deletes, and manages email on command using OpenAI.
 
 ### Assignments
 
-[ DUE ] Jan 3, 2024
+[ DUE ] Jan 3
 See task 1 below
 I need you to make the code more efficient and to finish the features listed. I will aid in this and answer questions as needed. Feel free to schedule face time meetings
 
