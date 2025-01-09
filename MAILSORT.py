@@ -29,7 +29,7 @@ import numpy as np
 
 
 
-user_name = "Haley"
+user_name = "Admin"
 # Load environment variables from .env file
 load_dotenv()
 
